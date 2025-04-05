@@ -20,7 +20,7 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} ${playfair.variable}`}>
+      <body className={`${roboto.variable} ${playfair.variable} body`}>
         <PreloadProvider>{children}</PreloadProvider>
       </body>
     </html>

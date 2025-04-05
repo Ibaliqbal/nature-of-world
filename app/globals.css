@@ -3,16 +3,25 @@
   --secondary-color: #121212;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+.container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  max-width: 1200px;
+}
+
 body {
   background-color: var(--primary-color);
   font-family: var(--font-roboto);
-  overflow: hidden;
 }
 
 h1,
@@ -41,7 +50,6 @@ a {
   height: var(--size);
   border: 2px solid var(--primary-color);
   border-radius: 50%;
-  position: absolute;
   transform-origin: 100% 100%;
   background-color: var(--secondary-color);
   pointer-events: none;
@@ -51,6 +59,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0.5;
   will-change: top, left;
@@ -114,6 +124,7 @@ a {
   width: 100%;
   height: 100dvh;
   overflow: hidden;
+  position: relative;
 }
 
 .main-video {
@@ -127,7 +138,8 @@ a {
 }
 
 .natures,
-.nature {
+.nature,
+.hero-section-nature {
   cursor: none;
 }
 
@@ -143,11 +155,13 @@ a {
   align-items: center;
 }
 
-.nature a {
+.nature a,
+.hero-section-nature a {
   display: none;
 }
 
-.nature h1 {
+.nature h1,
+.hero-section-nature h1 {
   font-size: 8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -157,7 +171,19 @@ a {
   text-align: center;
 }
 
-.nature .clip-text {
+.keep-scrolling {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  font-weight: 600;
+  z-index: 3;
+  color: var(--primary-color);
+  letter-spacing: 0.2em;
+}
+
+.clip-text {
   overflow: hidden;
 }
 
@@ -182,4 +208,41 @@ a {
   border-radius: inherit;
   transform: scaleX(0);
   will-change: transform;
+}
+
+.hero-section-nature {
+  width: 100%;
+  height: 100dvh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.intro-nature {
+  margin-block: 5rem;
+}
+
+.intro-nature .container {
+  padding-block: 1.5rem;
+}
+
+.intro-nature .container h1 {
+  font-size: clamp(2rem, 10vw, 8rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  width: 100%;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  margin-bottom: 1rem;
+}
+
+.intro-nature .container p {
+  font-size: clamp(1.5rem, 10vw, 2rem);
+  font-weight: 500;
+  text-indent: 2em;
+  text-align: justify;
 }

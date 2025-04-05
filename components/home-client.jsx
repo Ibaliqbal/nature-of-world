@@ -8,7 +8,8 @@ import Cursor from "./cursor";
 import SplitType from "split-type";
 import Link from "next/link";
 import { usePreload } from "@/context/preload-context";
-import { mainNature } from "@/config/constant";
+import { natures } from "@/config/constant";
+import { unstable_ViewTransition as ViewTransition } from "react";
 
 const HomeClient = () => {
   const naturesRef = useRef(null);
@@ -27,7 +28,7 @@ const HomeClient = () => {
       );
       const natureList = document.querySelectorAll(".nature");
       const totalList = natureList.length;
-      let currentIndex = -1,
+      let currentIndex = 0,
         animating;
 
       // Set initial states for all nature sections
@@ -50,16 +51,22 @@ const HomeClient = () => {
         scale: 0,
         ease: "power4.inOut",
         duration: 0.5,
-      }).from(splitTitle[0].chars, {
-        y: 100,
-        opacity: 0,
-        stagger: {
-          each: 0.05,
-          from: "random",
-        },
-        duration: 0.8,
-        ease: "power2",
-      });
+      })
+        .from(splitTitle[currentIndex].chars, {
+          y: 100,
+          opacity: 0,
+          stagger: {
+            each: 0.05,
+            from: "random",
+          },
+          duration: 0.8,
+          ease: "power2",
+        })
+        .from(".keep-scrolling", {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power3",
+        });
 
       function logKey(e) {
         console.log(e.code);
@@ -133,9 +140,7 @@ const HomeClient = () => {
         wheelSpeed: -1,
       });
 
-      goToSection(0);
-
-      document.addEventListener("keydown", logKey);
+      goToSection(currentIndex);
 
       const natureClick = contextSafe(function (e) {
         if (animating) return;
@@ -152,17 +157,52 @@ const HomeClient = () => {
 
         tl.to(".progress-nature", {
           opacity: 0.7,
-          duration: 3,
+          duration: 1,
           ease: "power1.inOut",
-        }).to(".progress-nature-bar", {
-          scaleX: 1,
-          duration: 4,
-          ease: "power3.out",
-        });
+        })
+          .to(".progress-nature-bar", {
+            scaleX: 1,
+            duration: 4,
+            ease: "power3.out",
+          })
+          .to(".progress-nature", {
+            opacity: 0,
+            duration: 1,
+            ease: "power1.inOut",
+          })
+          .to(".cursor", {
+            scale: 0,
+            ease: "power4.inOut",
+            duration: 0.5,
+          })
+          .to(
+            splitTitle[currentIndex].chars,
+            {
+              y: 100,
+              opacity: 0,
+              stagger: {
+                each: 0.05,
+                from: "random",
+              },
+              duration: 0.8,
+              ease: "power2",
+            },
+            "<"
+          )
+          .to(
+            ".keep-scrolling",
+            {
+              opacity: 0,
+              duration: 0.5,
+              ease: "power3",
+            },
+            "<"
+          );
       });
 
       // Add click listener to initial section
-      natureList[0].addEventListener("click", natureClick);
+      natureList[currentIndex].addEventListener("click", natureClick);
+      document.addEventListener("keydown", logKey);
 
       return () => {
         Observer.getAll((o) => o.kill());
@@ -177,17 +217,21 @@ const HomeClient = () => {
   );
 
   return (
-    <main className="natures" ref={naturesRef}>
-      {mainNature.map((nature) => (
+    <main ref={naturesRef} className="natures">
+      {natures.map((nature) => (
         <section className="nature" key={nature.slug}>
-          <video autoPlay playsInline muted loop className="main-video">
-            <source src={nature.video} type="video/mp4" />
-          </video>
+          <ViewTransition name={`video-${nature.slug}`}>
+            <video autoPlay playsInline muted loop className="main-video">
+              <source src={nature.video} type="video/mp4" />
+            </video>
+          </ViewTransition>
           <h1 className="nature-title">{nature.name}</h1>
           <Link href={`/natures/${nature.slug}`}>Got nature {nature.name}</Link>
         </section>
       ))}
-      <Cursor />
+      <p className="keep-scrolling">( Keep Scrolling )</p>
+      <Cursor text="Explore" />
+
       <div className="progress-nature">
         <div className="progress-nature-bar" />
       </div>

@@ -9,6 +9,12 @@
   padding: 0;
 }
 
+body {
+  background-color: var(--primary-color);
+  font-family: var(--font-roboto);
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -26,4 +32,154 @@ a {
   text-decoration: none;
   color: inherit;
   font-family: var(--font-roboto);
+}
+
+.cursor {
+  --size: 60px;
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  position: absolute;
+  transform-origin: 100% 100%;
+  background-color: var(--secondary-color);
+  pointer-events: none;
+  z-index: 99;
+  color: var(--primary-color);
+  font-size: calc(var(--size) - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  will-change: top, left;
+  font-family: var(--font-playfair);
+  will-change: transform;
+}
+
+.preload {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  cursor: none;
+}
+
+.preload .blocks {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.blocks .block {
+  width: 2%;
+  height: 100%;
+  background-color: var(--primary-color);
+  transform-origin: left;
+}
+
+.preload-progress {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+}
+
+.preload-progress .preload-text {
+  color: var(--secondary-color);
+  z-index: 3;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+.preload-progress .preload-progress-bar {
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  will-change: transform;
+  background-color: var(--secondary-color);
+  transform-origin: left;
+}
+
+.natures {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.main-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.natures,
+.nature {
+  cursor: none;
+}
+
+.nature {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nature a {
+  display: none;
+}
+
+.nature h1 {
+  font-size: 8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  mix-blend-mode: difference;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.nature .clip-text {
+  overflow: hidden;
+}
+
+.natures .progress-nature {
+  width: 45%;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  will-change: opacity;
+  opacity: 0;
+}
+
+.progress-nature .progress-nature-bar {
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary-color);
+  border-radius: inherit;
+  transform: scaleX(0);
+  will-change: transform;
 }

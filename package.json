@@ -14,10 +14,13 @@
     "lenis": "^1.2.3",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "split-type": "^0.3.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/node": "22.14.0",
+    "@types/react": "19.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4"
   }
